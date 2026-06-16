@@ -1,6 +1,7 @@
 "use client";
 
 import React, { createContext, useContext, useEffect, useState } from "react";
+
 import { Product } from "../data/products";
 
 type CartContextType = {
@@ -12,56 +13,37 @@ type CartContextType = {
 
 const CartContext = createContext<CartContextType | undefined>(undefined);
 
-export function CartProvider({ children }: { children: React.ReactNode }) {
+export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [cart, setCart] = useState<Product[]>([]);
-  const [isLoaded, setIsLoaded] = useState(false);
+  const [total, setTotal] = useState<number>(0);
 
-  // Week 3 Requirement: Load from localStorage on initialization
+  // Automatically calculate total price whenever the cart changes
   useEffect(() => {
-    const stored = localStorage.getItem("shopease_cart");
-    if (stored) {
-      try {
-        setCart(JSON.parse(stored));
-      } catch (e) {
-        console.error(e);
-      }
-    }
-    setIsLoaded(true);
-  }, []);
+    const newTotal = cart.reduce((sum, item) => sum + item.price, 0);
+    setTotal(newTotal);
+  }, [cart]);
 
-  // Week 3 Requirement: Save changes back to localStorage
-  useEffect(() => {
-    if (isLoaded) {
-      localStorage.setItem("shopease_cart", JSON.stringify(cart));
-    }
-  }, [cart, isLoaded]);
-
+  // Add item to cart
   const addToCart = (product: Product) => {
-    setCart((prev) => [...prev, product]);
+    setCart((prevCart) => [...prevCart, product]);
   };
 
+  // Remove item from cart by filtering out its id
   const removeFromCart = (id: number) => {
-    // Removes single item matching ID to keep remaining duplicates safe
-    setCart((prev) => {
-      const index = prev.findIndex((item) => item.id === id);
-      if (index === -1) return prev;
-      const updated = [...prev];
-      updated.splice(index, 1);
-      return updated;
-    });
+    setCart((prevCart) => prevCart.filter((item) => item.id !== id));
   };
-
-  const total = cart.reduce((sum, item) => sum + item.price, 0);
 
   return (
     <CartContext.Provider value={{ cart, addToCart, removeFromCart, total }}>
       {children}
     </CartContext.Provider>
   );
-}
+};
 
-export function useCart() {
+export const useCart = () => {
   const context = useContext(CartContext);
-  if (!context) throw new Error("useCart must be used within CartProvider");
+  if (!context) {
+    throw new Error("useCart must be used within a CartProvider");
+  }
   return context;
-}
+};

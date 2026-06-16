@@ -5,15 +5,16 @@ import { useCart } from "../context/CartContext";
 import { Product } from "../data/products";
 
 export default function ProductCard({ product }: { product: Product }) {
-  const { addToCart } = useCart();
-
-  // Bulletproof mapping helper to show illustration without external assets
   const getProductEmoji = (id: number) => {
     if (id === 1) return "🎧";
     if (id === 2) return "👟";
     if (id === 3) return "⌚";
-    return "🎒";
+    return "🛍️";
   };
+
+  const { addToCart } = useCart();
+
+  
 
   return (
     <div style={{
@@ -79,25 +80,13 @@ export default function ProductCard({ product }: { product: Product }) {
             <span style={{ fontSize: "12px", color: "#9ca3af", textDecoration: "line-through" }}>${(product.price * 1.2).toFixed(2)}</span>
           </div>
 
-          <button
-            onClick={() => addToCart(product)}
-            disabled={!product.inStock}
-            style={{
-              width: "100%",
-              backgroundColor: product.inStock ? "#f68b1e" : "#d1d5db",
-              color: "#ffffff",
-              border: "none",
-              borderRadius: "6px",
-              padding: "10px 0",
-              fontSize: "12px",
-              fontWeight: "700",
-              cursor: product.inStock ? "pointer" : "not-allowed",
-              textTransform: "uppercase",
-              letterSpacing: "0.5px"
-            }}
-          >
-            {product.inStock ? "Add to Cart" : "Sold Out"}
-          </button>
+          <button 
+  onClick={() => addToCart(product)} 
+  disabled={!product.inStock}
+>
+  {product.inStock ? "Add to Cart" : "Sold Out"}
+</button>
+
         </div>
       </div>
       
