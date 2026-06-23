@@ -1,11 +1,11 @@
-import "@/app/globals.css";
+import "./globals.css"; // Uses local relative import directly next to the file
 import { CartProvider } from "../context/CartContext";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 
 export const metadata = {
   title: "ShopEase | Mini Store",
-  description: "Modern e-commerce frontend project",
+  description: "Modern e-commerce frontend presentation template",
 };
 
 export default function RootLayout({ children }) {
@@ -21,3 +21,4 @@ export default function RootLayout({ children }) {
     </html>
   );
 }
+
