@@ -1,14 +1,11 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  output: 'export', // Forces Next.js to cleanly export your working static pages
   images: {
-    remotePatterns: [
-      {
-        protocol: 'https',
-        hostname: 'images.unsplash.com',
-      },
-    ],
+    unoptimized: true, // Completely disables Vercel's network image blocking
   },
 };
 
 export default nextConfig;
+
 
