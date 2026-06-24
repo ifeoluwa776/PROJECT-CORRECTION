@@ -1,11 +1,15 @@
-/** @type {import('next').NextConfig} */
 const nextConfig = {
-  output: 'export', // Forces Next.js to cleanly export your working static pages
+  output: 'export', // If you are doing static exports
   images: {
-    unoptimized: true, // Completely disables Vercel's network image blocking
+    unoptimized: true,
   },
 };
 
-export default nextConfig;
+module.exports = nextConfig;
+
+
+
+
+
 
 

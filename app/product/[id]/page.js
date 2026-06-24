@@ -6,7 +6,6 @@ import { useCart } from "../../../context/CartContext";
 import { notFound } from "next/navigation";
 
 export default function ProductDetailPage({ params }) {
-  // Safe asynchronous unwrapping required by Next.js
   const resolvedParams = React.use(params);
   const product = products.find((p) => p.id === parseInt(resolvedParams.id));
   const { addToCart } = useCart();
@@ -29,12 +28,12 @@ export default function ProductDetailPage({ params }) {
             <img src={product.image} alt={product.title} style={{ maxWidth: "100%", maxHeight: "350px", objectFit: "contain" }} />
           </div>
 
-          {/* Metadata Specs Box */}
+          {/* Specs Box */}
           <div style={{ flex: "1", minWidth: "300px", display: "flex", flexDirection: "column", justifyContent: "center" }}>
             <span style={{ fontSize: "10px", fontWeight: "bold", color: "#ffffff", backgroundColor: "#75757a", padding: "2px 6px", borderRadius: "2px", alignSelf: "start", textTransform: "uppercase" }}>
               {product.category}
             </span>
-            <h1 style={{ fontSize: "20px", fontWeight: "bold", color: "#282828", margin: "8px 0" }}>{product.title}</h1>
+            <h1 style={{ fontSize: "20px", fontWeight: "bold", color: "#282828" , margin: "8px 0" }}>{product.title}</h1>
             
             <div style={{ display: "flex", alignItems: "center", gap: "4px", marginBottom: "16px" }}>
               <span style={{ color: "#f68b1e" }}>★</span>
@@ -74,4 +73,7 @@ export default function ProductDetailPage({ params }) {
     </div>
   );
 }
+
+
+
 
